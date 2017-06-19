@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>台鐵列車即時車況查詢</title>
+  <link rel="stylesheet" href="libs/tether-1.3.3/dist/css/tether.min.css">
+  <link rel="stylesheet" href="libs/4.0.0-alpha.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <nav class="navbar fixed-top navbar-inverse bg-inverse">
+    <a class="navbar-brand" href="#">台鐵列車即時車況查詢</a>
+  </nav>
+
+  <div class="container">
+    <div class="train_app">
+      <div class="row">
+        <div class="col-sm-6">
+          <select class="form-control line-select" v-model="selectedLine" v-on:change="getStationsByLineID">
+            <option disabled>請選擇線路</option>
+            <option v-for="line in this.$store.state.lines" v-bind:value="line.LineID">
+              {{ line.LineNameZh }}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <select class="form-control station-select" v-model="selectedStation" v-on:change="getLiveBoardByStationID">
+            <option disabled>請選擇車站</option>
+            <option v-for="station in this.$store.state.stations" v-bind:value="station.StationID">
+              {{ station.StationName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="list-group">
+        <div class="list-group-item" v-for="liveboard in this.$store.state.liveBoard">
+          <div class="row no-gutters list-group-item-row">
+            <div class="col list-group-item-left-col">
+              <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
+              開往 {{ liveboard.EndingStationName.Zh_tw }}
+              <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
+              {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
+            </div>
+            <div class="col list-group-item-right-col">
+              <span class="badge badge-pill badge-danger" v-if="liveboard.DelayTime > 0">
+                晚 {{ liveboard.DelayTime }} 分
+              </span>
+              <span class="badge badge-pill badge-success" v-else>
+                準點
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+  
+  <script src="libs/vue-dev/dist/vue.min.js"></script>
+  <script src="libs/vuex/vuex@2.3.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="libs/tether-1.3.3/dist/js/tether.min.js"></script>
+  <script src="libs/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
