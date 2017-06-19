@@ -1,0 +1,27 @@
+body {
+  margin-bottom: 15px;
+}
+
+.train_app {
+  margin-top: 70px;
+}
+
+.list-group-item-row {
+  width: 100%;
+}
+
+.list-group-item-right-col {
+  
+}
+
+.list-group-item-right-col {
+  width: 60px;
+  max-width: 60px;
+  text-align: right;
+}
+
+@media (max-width: 575px) {
+  .line-select {
+    margin-bottom: 10px;
+  }
+}
