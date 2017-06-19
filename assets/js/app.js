@@ -70,6 +70,11 @@ $(function () {
       store.commit('getLines');
       store.commit('getStationsByLineID', this.selectedLine);
       store.commit('getLiveBoardByStationID', this.selectedStation);
+
+      // 五分鐘自動更新一次
+      setInterval(()=>{
+        store.commit('getLiveBoardByStationID', this.selectedStation);
+      }, 300000);
     },
     methods: {
       getStationsByLineID: function() {
