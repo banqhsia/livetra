@@ -1,9 +1,8 @@
+Vue.component('select2', VueSelect2);
+
 $(function () {
   
   'use strict';
-  
-  Vue.component('select2', VueSelect2);
-
 
   const trainType = {"1115":"莒光號", //（有身障座位 ,有自行車車廂）
                      "1108":"自強號", //（推拉式自強號且無自行車車廂）

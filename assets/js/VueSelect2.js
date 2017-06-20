@@ -1,4 +1,4 @@
-const VueSelect2 = {
+var VueSelect2 = {
   props: ['options', 'value'],
   template: '<select><slot></slot></select>',
   mounted: function () {

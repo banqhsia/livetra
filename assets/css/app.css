@@ -2,6 +2,10 @@ body {
   margin-bottom: 15px;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .train_app {
   margin-top: 70px;
 }
