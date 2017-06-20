@@ -10,9 +10,7 @@ body {
   width: 100%;
 }
 
-.list-group-item-right-col {
-  
-}
+.list-group-item-right-col {}
 
 .list-group-item-right-col {
   width: 60px;
@@ -20,8 +18,14 @@ body {
   text-align: right;
 }
 
-@media (max-width: 575px) {
-  .line-select {
-    margin-bottom: 10px;
-  }
+.select2-container--default .select2-selection--single {
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+  padding: .5rem .75rem;
+  height: auto;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 10px;
+    right: 10px;
 }

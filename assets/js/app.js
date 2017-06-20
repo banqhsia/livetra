@@ -2,6 +2,9 @@ $(function () {
   
   'use strict';
   
+  Vue.component('select2', VueSelect2);
+
+
   const trainType = {"1115":"莒光號", //（有身障座位 ,有自行車車廂）
                      "1108":"自強號", //（推拉式自強號且無自行車車廂）
                      "1100":"自強號", //（DMU2800、2900、3000型柴聯及 EMU型電車自強號）
@@ -34,11 +37,6 @@ $(function () {
         getData('Line', false, '', json=>store.state.lines = json);
       },
       //
-      // 依照線路取所有車站
-      getStationsByLineID(state, id) {
-        getData('StationOfLine', true, "&$filter=LineID eq '" + id + "'", json=>store.state.stations = json[0].Stations);
-      },
-      //
       // 依照車站取電子看板資料
       getLiveBoardByStationID(state, id) {
         getData('LiveBoard', true, "&$filter=StationID eq '" + id + "'", json=>store.state.liveBoard = json);
@@ -63,24 +61,43 @@ $(function () {
     el: '.train_app',
     store,
     data: {
-      selectedLine: localStorage.getItem('selectedLine') || 'WL-C', //預設西部幹線海線
-      selectedStation: localStorage.getItem('selectedStation') || '1008' //預設台北車站
+      selectedStation: localStorage.getItem('selectedStation') || '1008', //預設台北車站
+      trainInfo: '',
+      stationsOfLine: []
+    },
+    watch: {
+      selectedStation: function() {
+        this.getLiveBoardByStationID()
+      }
     },
     created() {
-      store.commit('getLines');
-      store.commit('getStationsByLineID', this.selectedLine);
+      store.commit('getLines'); //取線路名稱 (local data)
       store.commit('getLiveBoardByStationID', this.selectedStation);
+      
+      getData('StationOfLine', false, '', json=>{
+        let arr = [];
 
+        json.forEach(item=>{
+          let children = [];
+          item.Stations.forEach(station=>{
+            children.push({text: station.StationName, id: station.StationID})
+          });
+
+          arr.push({
+            text: store.state.lines.filter(i=>i.LineID == item.LineID)[0]['LineNameZh'],
+            children: children
+          });
+        });
+        
+        this.stationsOfLine = arr;
+      }); //取全台車站 (local data)
+      
       // 五分鐘自動更新一次
       setInterval(()=>{
         store.commit('getLiveBoardByStationID', this.selectedStation);
       }, 300000);
     },
     methods: {
-      getStationsByLineID: function() {
-        localStorage.setItem('selectedLine', this.selectedLine);
-        store.commit('getStationsByLineID', this.selectedLine);
-      },
       getLiveBoardByStationID: function() {
         localStorage.setItem('selectedStation', this.selectedStation);
         store.commit('getLiveBoardByStationID', this.selectedStation);
@@ -91,7 +108,8 @@ $(function () {
       showTrainInfo: function(trainNo) {
         getData('GeneralTrainInfo', true, "&$filter=TrainNo eq '" + trainNo + "'", json=>{
           let data = json[0];
-          alert(`${data.TrainNo} ${data.TrainTypeName.Zh_tw} ${data.Note.Zh_tw} 由 ${data.StartingStationName.Zh_tw} 開往 ${data.EndingStationName.Zh_tw}`)
+          this.trainInfo = `${data.TrainNo} ${data.TrainTypeName.Zh_tw} ${data.Note.Zh_tw} 由 ${data.StartingStationName.Zh_tw} 開往 ${data.EndingStationName.Zh_tw}`;
+          $('#train_info_modal').modal('show');
         });
       }
     }
