@@ -4,6 +4,8 @@ $(function () {
   
   'use strict';
 
+  const updatespeed = 60000;
+
   const trainType = {"1115":"莒光號", //（有身障座位 ,有自行車車廂）
                      "1108":"自強號", //（推拉式自強號且無自行車車廂）
                      "1100":"自強號", //（DMU2800、2900、3000型柴聯及 EMU型電車自強號）
@@ -39,6 +41,7 @@ $(function () {
       // 依照車站取電子看板資料
       getLiveBoardByStationID(state, id) {
         getData('LiveBoard', true, "&$filter=StationID eq '" + id + "'", json=>store.state.liveBoard = json);
+        buildLoadingCircle();
       }
     }
   });
@@ -54,6 +57,18 @@ $(function () {
       alert(`資料傳輸錯誤，請重新整理`);
       //console.log(`${path}${params} 資料傳輸錯誤`);
     });
+  }
+
+  function buildLoadingCircle(){
+    $(".my-progress-bar").circularProgress({
+        line_width: 3,
+        width: '30px',
+        height: '30px',
+        color: '#ccc',
+        starting_position: 12.00,
+        percent: 0,
+        percentage: ''
+    }).circularProgress('animate', 100, updatespeed);
   }
 
   var app = new Vue({
@@ -94,7 +109,7 @@ $(function () {
       // 五分鐘自動更新一次
       setInterval(()=>{
         store.commit('getLiveBoardByStationID', this.selectedStation);
-      }, 300000);
+      }, updatespeed);
     },
     methods: {
       getLiveBoardByStationID: function() {
@@ -114,3 +129,7 @@ $(function () {
     }
   });
 });
+
+
+
+

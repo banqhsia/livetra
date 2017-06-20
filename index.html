@@ -14,9 +14,12 @@
   <link rel="stylesheet" href="assets/css/app.css?n=1">
 </head>
 <body>
-  <nav class="navbar fixed-top navbar-inverse bg-inverse">
-    <a class="navbar-brand" href="#">台鐵列車即時車況查詢</a>
-  </nav>
+  <header class="site-header">
+    <a class="title" href="#">台鐵列車即時車況查詢</a>
+    <div class="auto-update">
+      一分鐘自動更新 <div class="my-progress-bar"></div>
+    </div>
+  </header>
 
   <div class="container">
     <div class="train_app" v-cloak>
@@ -77,6 +80,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="libs/tether-1.3.3/dist/js/tether.min.js"></script>
   <script src="libs/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <script src="libs/jQuery-Circular-Progress-Bar-With-Text-Counter/scripts/plugin.js"></script>
   <script src="libs/select2-4.0.3/dist/js/select2.full.min.js"></script>
   <script src="assets/js/VueSelect2.js?n=1"></script><!--n=1是為了pagespeed mod插件的bug導致這個快取時一直有問題-->
   <script src="assets/js/app.js"></script>

@@ -6,6 +6,70 @@ body {
   display: none;
 }
 
+.select2-container--default .select2-selection--single {
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+  padding: .5rem .75rem;
+  height: auto;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 10px;
+  right: 10px;
+}
+
+
+
+
+.circular-progress-bar {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  margin: 0 auto;
+  transform: rotate(-90deg);
+}
+
+
+
+
+
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  padding: .5rem 1rem;
+  background: #292b2c !important;
+  color: #fff;
+}
+
+.title {
+  display: block;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  margin-right: 1rem;
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+.auto-update {
+  text-align: right;
+}
+
+
+
+
+
+
+
+
 .train_app {
   margin-top: 70px;
 }
@@ -20,16 +84,4 @@ body {
   width: 60px;
   max-width: 60px;
   text-align: right;
-}
-
-.select2-container--default .select2-selection--single {
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: .25rem;
-  padding: .5rem .75rem;
-  height: auto;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    top: 10px;
-    right: 10px;
 }
