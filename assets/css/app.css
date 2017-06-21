@@ -83,6 +83,13 @@ body {
   margin-top: 70px;
 }
 
+.timetable-title,
+.direction-title {
+  margin-top: 20px;
+  padding-left: .75em;
+  font-size: 1.3em;
+}
+
 .list-group-item-row {
   width: 100%;
 }
