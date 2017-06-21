@@ -23,11 +23,19 @@ body {
 
 .circular-progress-bar {
   display: inline-block;
-  vertical-align: middle;
+  width: 30px !important;
+  height: 30px !important;
   position: relative;
   margin: 0 auto;
+  vertical-align: middle;
   transform: rotate(-90deg);
 }
+
+.circular-progress-bar canvas {
+  width: 30px;
+  height: 30px;
+}
+
 
 
 
@@ -61,6 +69,7 @@ body {
 
 .auto-update {
   text-align: right;
+  color: #999;
 }
 
 
@@ -84,4 +93,24 @@ body {
   width: 60px;
   max-width: 60px;
   text-align: right;
+}
+
+.view-timetable-btn {
+  width: 100%;
+}
+
+.time-table-datagrid {
+  overflow-x: scroll;
+}
+
+@media (max-width: 575px) {
+  .time-table-datagrid {
+    font-size: 12px;
+  }
+}
+
+.time-table-datagrid th,
+.time-table-datagrid td {
+  white-space: nowrap;
+  text-align: center;
 }

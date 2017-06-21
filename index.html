@@ -51,6 +51,35 @@
         </div>
       </div>
 
+      <hr>
+      
+      <button type="button" class="btn btn-outline-primary view-timetable-btn" v-on:click="getDailyTimetable" v-if="!this.$store.state.timetable.length">查看時刻表</button>
+
+      <div class="time-table-datagrid" v-else>
+        <table class="table table-striped">
+          <thead class="thead-inverse">
+            <tr>
+              <th>車次</th>
+              <th>車種</th>
+              <th>到站</th>
+              <th>發車</th>
+              <th>始站</th>
+              <th>終站</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="train in this.$store.state.timetable">
+              <td>{{ train.TrainNo }}</td>
+              <td>{{ train.TrainClassificationName.Zh_tw.replace(/\(.+\)/g, '') }}</td>
+              <td>{{ train.ArrivalTime }}</td>
+              <td>{{ train.DepartureTime }}</td>
+              <td>{{ train.StartingStationName }}</td>
+              <td>{{ train.EndingStationName }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="modal fade" id="train_info_modal" tabindex="-1" role="dialog" aria-labelledby="列車資訊" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

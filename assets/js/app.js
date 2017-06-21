@@ -26,7 +26,8 @@ $(function () {
     state: {
       lines: [],
       stations: [],
-      liveBoard: []
+      liveBoard: [],
+      timetable: []
     },
     mutations: {
       increment (state, n=1) {
@@ -35,13 +36,25 @@ $(function () {
       //
       // 取路線
       getLines(state) {
-        getData('Line', false, '', json=>store.state.lines = json);
+        getData('Line', false, '', json=>state.lines = json);
       },
       //
       // 依照車站取電子看板資料
       getLiveBoardByStationID(state, id) {
-        getData('LiveBoard', true, "&$filter=StationID eq '" + id + "'", json=>store.state.liveBoard = json);
+        getData('LiveBoard', true, "&$filter=StationID eq '" + id + "'", json=>state.liveBoard = json);
         buildLoadingCircle();
+      },
+      //
+      // 依照車站取時刻表
+      getDailyTimetable(state, station_id, date) {
+        if (!date) {
+          var d = new Date();
+          date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+        }
+        getData('DailyTimetable/Station/' + station_id + '/' + date, true, '', json=>state.timetable = json);
+      },
+      clearTimetable(state) {
+        state.timetable = [];
       }
     }
   });
@@ -61,10 +74,10 @@ $(function () {
 
   function buildLoadingCircle(){
     $(".my-progress-bar").circularProgress({
-        line_width: 3,
-        width: '30px',
-        height: '30px',
-        color: '#ccc',
+        line_width: 9,
+        width: '90px',
+        height: '90px',
+        color: '#aaa',
         starting_position: 12.00,
         percent: 0,
         percentage: ''
@@ -82,6 +95,7 @@ $(function () {
     watch: {
       selectedStation: function() {
         this.getLiveBoardByStationID()
+        store.commit('clearTimetable');
       }
     },
     created() {
@@ -125,6 +139,9 @@ $(function () {
           this.trainInfo = `${data.TrainNo} ${data.TrainTypeName.Zh_tw} ${data.Note.Zh_tw} 由 ${data.StartingStationName.Zh_tw} 開往 ${data.EndingStationName.Zh_tw}`;
           $('#train_info_modal').modal('show');
         });
+      },
+      getDailyTimetable: function() {
+        store.commit('getDailyTimetable', this.selectedStation);
       }
     }
   });
