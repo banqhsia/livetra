@@ -106,9 +106,7 @@ body {
   width: 100%;
 }
 
-.time-table-datagrid {
-  overflow-x: scroll;
-}
+.time-table-datagrid {}
 
 @media (max-width: 575px) {
   .time-table-datagrid {
