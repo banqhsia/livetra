@@ -86,8 +86,8 @@ body {
 .timetable-title,
 .direction-title {
   margin-top: 20px;
-  padding-left: .75em;
-  font-size: 1.3em;
+  padding-left: 1.25rem;
+  font-size: 18px;
 }
 
 .list-group-item-row {
@@ -114,6 +114,10 @@ body {
   .time-table-datagrid {
     font-size: 12px;
   }
+}
+
+.directions-btn-group {
+  margin-top: 15px;
 }
 
 .time-table-datagrid th,

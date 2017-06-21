@@ -85,9 +85,9 @@
             <h3 class="timetable-title">時刻表</h3>
           </div>
           <div class="col text-right">
-            <div class="btn-group pull-right" role="group">
-              <button type="button" class="btn btn-outline-primary" v-bind:class="timetableDirection == 0 ? 'active' : ''" v-on:click="timetableDirection = 0">順行</button>
-              <button type="button" class="btn btn-outline-primary" v-bind:class="timetableDirection == 1 ? 'active' : ''" v-on:click="timetableDirection = 1">逆行</button>
+            <div class="btn-group directions-btn-group" role="group">
+              <button type="button" class="btn btn-sm btn-outline-primary" v-bind:class="timetableDirection == 0 ? 'active' : ''" v-on:click="timetableDirection = 0">順行</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" v-bind:class="timetableDirection == 1 ? 'active' : ''" v-on:click="timetableDirection = 1">逆行</button>
             </div>
           </div>
         </div>
