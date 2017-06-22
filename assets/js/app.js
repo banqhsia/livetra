@@ -1,9 +1,9 @@
-Vue.component('select2', VueSelect2);
-
 $(function () {
   
   'use strict';
-
+  
+  Vue.component('select2', VueSelect2);
+  
   const updatespeed = 60000;
 
   const trainType = {"1115":"莒光號", //（有身障座位 ,有自行車車廂）
@@ -26,7 +26,10 @@ $(function () {
     state: {
       lines: [],
       stations: [],
-      liveBoard: [],
+      liveBoard: {
+        clockwise: [], //順行
+        counterclockwise: [] //逆行
+      },
       timetable: [],
       stationsOfLine: []
     },
@@ -80,61 +83,7 @@ $(function () {
     }
   });
 
-  function getData(func, params = '', origin, filters, cb) {
-    // origin == true 讀ptx pai資料 false 讀本地預先存好的資料（通常就是不太會有變動的部分）
-    let path = origin ? 'http://ptx.transportdata.tw/MOTC/v2/Rail/TRA/' : 'data/';
-    path += func + params + '?$format=json' + filters;
-
-    fetch(path)
-    .then(data=>data.json())
-    .then(json=>{
-      switch (func) {
-        case 'StationOfLine':
-          json = json.filter(item => (item.LineID != 'WL' && item.LineID != 'TL')) //濾掉西部幹線跟縱貫線（因為這兩條線的LineID無法找到車站
-          break;
-        case 'DailyTimetable':
-          var now = new Date().getTime();
-          json = json.filter(item => {
-            let dTime = new Date();
-            dTime.setHours(item.DepartureTime.split(':')[0]);
-            dTime.setMinutes(item.DepartureTime.split(':')[1]);
-            return dTime.getTime() >= now;
-          });
-          break;
-        case 'LiveBoard':
-          var now = new Date().getTime();
-          json = json.filter(item => {
-            let dTime = new Date();
-            dTime.setHours(item.ScheduledDepartureTime.split(':')[0]);
-            dTime.setMinutes(item.ScheduledDepartureTime.split(':')[1]);
-            return dTime.getTime() >= now && item.DelayTime == 0;
-          });
-          break;
-        default:
-          break;
-      }
-      return json;
-    })
-    .then(json=>cb(json))
-    .catch(data => {
-      alert(`資料傳輸錯誤，請重新整理`);
-      //console.log(func, params, filters, path, origin, '資料傳輸錯誤', data);
-    });
-  }
-
-  function buildLoadingCircle(){
-    $(".my-progress-bar").circularProgress({
-        line_width: 9,
-        width: '90px',
-        height: '90px',
-        color: '#aaa',
-        starting_position: 12.00,
-        percent: 0,
-        percentage: ''
-    }).circularProgress('animate', 100, updatespeed);
-  }
-
-  var app = new Vue({
+  const app = new Vue({
     el: '.train_app',
     store,
     data: {
@@ -177,6 +126,84 @@ $(function () {
       }
     }
   });
+
+
+
+
+
+
+  function getData(func, params = '', origin, filters, cb) {
+    // origin == true 讀ptx pai資料 false 讀本地預先存好的資料（通常就是不太會有變動的部分）
+    let path = origin ? 'http://ptx.transportdata.tw/MOTC/v2/Rail/TRA/' : 'data/';
+    path += func + params + '?$format=json' + filters;
+
+    fetch(path)
+    .then(data=>data.json())
+    .then(json=>{
+
+      let now = new Date().getTime();
+
+      switch (func) {
+        case 'StationOfLine':
+          json = json.filter(item => (item.LineID != 'WL' && item.LineID != 'TL')) //濾掉西部幹線跟縱貫線（因為這兩條線的LineID無法找到車站
+          break;
+
+        case 'DailyTimetable':
+          // 濾掉已離站的車
+          json = json.filter(item => {
+            let dTime = new Date();
+            dTime.setHours(item.DepartureTime.split(':')[0]);
+            dTime.setMinutes(item.DepartureTime.split(':')[1]);
+            return dTime.getTime() >= now;
+          });
+          break;
+
+        case 'LiveBoard':
+          // 濾掉已離站的車
+          json = json.filter(item => {
+            let dTime = new Date();
+            dTime.setHours(item.ScheduledDepartureTime.split(':')[0]);
+            dTime.setMinutes(item.ScheduledDepartureTime.split(':')[1]);
+            return dTime.getTime() >= now && item.DelayTime == 0;
+          });
+
+          // 將資料分成順行逆行兩個部分
+          let clockwise = json.filter(item=>item.Direction == 0);
+          let counterclockwise = json.filter(item=>item.Direction == 1);
+          json = {clockwise: clockwise, counterclockwise: counterclockwise};
+
+          break;
+
+        default:
+          break;
+      }
+      return json;
+    })
+    .then(json=>cb(json))
+    .catch(data => {
+      alert(`資料傳輸錯誤，請重新整理`);
+      //console.log(func, params, filters, path, origin, '資料傳輸錯誤', data);
+    });
+  }
+
+  function buildLoadingCircle(){
+    $(".my-progress-bar").circularProgress({
+        line_width: 9,
+        width: '90px',
+        height: '90px',
+        color: '#aaa',
+        starting_position: 12.00,
+        percent: 0,
+        percentage: ''
+    }).circularProgress('animate', 100, updatespeed);
+  }
+
+
+
+
+
+
+
 });
 
 

@@ -27,10 +27,10 @@
       
       <h3 class="direction-title">順行</h3>
       <div class="list-group">
-        <div class="list-group-item" v-if="!this.$store.state.liveBoard.length">
-          目前沒有這個車站的即時列車資訊。
+        <div class="list-group-item" v-if="!this.$store.state.liveBoard.clockwise.length">
+          目前沒有這個車站順行方向的即時列車資訊。
         </div>
-        <div class="list-group-item" v-else v-for="liveboard in this.$store.state.liveBoard" v-if="liveboard.Direction == 0">
+        <div class="list-group-item" v-else v-for="liveboard in this.$store.state.liveBoard.clockwise">
           <div class="row no-gutters list-group-item-row">
             <div class="col list-group-item-left-col">
               <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
@@ -52,10 +52,10 @@
 
       <h3 class="direction-title">逆行</h3>
       <div class="list-group">
-        <div class="list-group-item" v-if="!this.$store.state.liveBoard.length">
-          目前沒有這個車站的即時列車資訊。
+        <div class="list-group-item" v-if="!this.$store.state.liveBoard.counterclockwise.length">
+          目前沒有這個車站逆行方向的即時列車資訊。
         </div>
-        <div class="list-group-item" v-else v-for="liveboard in this.$store.state.liveBoard" v-if="liveboard.Direction == 1">
+        <div class="list-group-item" v-else v-for="liveboard in this.$store.state.liveBoard.counterclockwise">
           <div class="row no-gutters list-group-item-row">
             <div class="col list-group-item-left-col">
               <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
