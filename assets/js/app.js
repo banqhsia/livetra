@@ -42,6 +42,7 @@ $(function () {
           store.commit('getStations');
         });
       },
+      //
       // 取車站
       getStations(state) {
         getData('StationOfLine', '', false, '', json=>{
@@ -192,7 +193,7 @@ $(function () {
         width: '90px',
         height: '90px',
         color: '#aaa',
-        starting_position: 12.00,
+        starting_position: 275.00,
         percent: 0,
         percentage: ''
     }).circularProgress('animate', 100, updatespeed);

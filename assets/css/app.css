@@ -2,6 +2,14 @@ body {
   margin-bottom: 15px;
 }
 
+.transparent {
+  opacity: 0;
+}
+
+.container {
+  padding: 0 7px;
+}
+
 [v-cloak] {
   display: none;
 }
@@ -70,6 +78,17 @@ body {
 .auto-update {
   text-align: right;
   color: #999;
+  font-size: 13px;
+}
+
+.auto-update span {
+  position: relative;
+  top: 2px;
+}
+
+.my-progress-bar {
+  background: url(../images/autoupdate.png) no-repeat 0 0 / 100% 100%;
+
 }
 
 
