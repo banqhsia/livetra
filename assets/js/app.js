@@ -102,7 +102,7 @@ $(function () {
       store.commit('getLinesAndStations'); //取線路名稱 (local data)
       store.commit('getLiveBoardByStationID', this.selectedStation);
       
-      // 五分鐘自動更新一次
+      // 一分鐘自動更新一次
       setInterval(()=>{
         store.commit('getLiveBoardByStationID', this.selectedStation);
       }, updatespeed);

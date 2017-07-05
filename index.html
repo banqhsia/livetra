@@ -54,24 +54,26 @@
         <div class="list-group-item" v-if="!this.$store.state.liveBoard.clockwise.length">
           目前沒有這個車站順行方向的即時列車資訊。
         </div>
-        <div class="list-group-item" v-else v-for="liveboard in this.$store.state.liveBoard.clockwise">
-          <div class="row no-gutters list-group-item-row">
-            <div class="col list-group-item-left-col">
-              <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
-              開往 {{ liveboard.EndingStationName.Zh_tw }}
-              <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
-              {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
-            </div>
-            <div class="col list-group-item-right-col">
-              <span class="badge badge-pill badge-danger" v-if="liveboard.DelayTime > 0">
-                晚 {{ liveboard.DelayTime }} 分
-              </span>
-              <span class="badge badge-pill badge-success" v-else>
-                準點
-              </span>
+        <transition-group name="fade" v-else tag="div">
+          <div class="list-group-item" v-for="liveboard in this.$store.state.liveBoard.clockwise" :key="liveboard.TrainNo">
+            <div class="row no-gutters list-group-item-row">
+              <div class="col list-group-item-left-col">
+                <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
+                開往 {{ liveboard.EndingStationName.Zh_tw }}
+                <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
+                {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
+              </div>
+              <div class="col list-group-item-right-col">
+                <span class="badge badge-pill badge-danger" v-if="liveboard.DelayTime > 0">
+                  晚 {{ liveboard.DelayTime }} 分
+                </span>
+                <span class="badge badge-pill badge-success" v-else>
+                  準點
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </transition-group>
       </div>
 
       <h3 class="direction-title">逆行</h3>
@@ -79,24 +81,26 @@
         <div class="list-group-item" v-if="!this.$store.state.liveBoard.counterclockwise.length">
           目前沒有這個車站逆行方向的即時列車資訊。
         </div>
-        <div class="list-group-item" v-else v-for="liveboard in this.$store.state.liveBoard.counterclockwise">
-          <div class="row no-gutters list-group-item-row">
-            <div class="col list-group-item-left-col">
-              <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
-              開往 {{ liveboard.EndingStationName.Zh_tw }}
-              <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
-              {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
-            </div>
-            <div class="col list-group-item-right-col">
-              <span class="badge badge-pill badge-danger" v-if="liveboard.DelayTime > 0">
-                晚 {{ liveboard.DelayTime }} 分
-              </span>
-              <span class="badge badge-pill badge-success" v-else>
-                準點
-              </span>
+        <transition-group name="fade" v-else tag="div">
+          <div class="list-group-item" v-for="liveboard in this.$store.state.liveBoard.counterclockwise" :key="liveboard.TrainNo">
+            <div class="row no-gutters list-group-item-row">
+              <div class="col list-group-item-left-col">
+                <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
+                開往 {{ liveboard.EndingStationName.Zh_tw }}
+                <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
+                {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
+              </div>
+              <div class="col list-group-item-right-col">
+                <span class="badge badge-pill badge-danger" v-if="liveboard.DelayTime > 0">
+                  晚 {{ liveboard.DelayTime }} 分
+                </span>
+                <span class="badge badge-pill badge-success" v-else>
+                  準點
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </transition-group>
       </div>
 
       <hr class="transparent">
