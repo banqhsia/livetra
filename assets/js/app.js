@@ -165,8 +165,9 @@ $(function () {
             let dTime = new Date();
             dTime.setHours(item.ScheduledDepartureTime.split(':')[0]);
             dTime.setMinutes(item.ScheduledDepartureTime.split(':')[1]);
-            return dTime.getTime() >= now && item.DelayTime == 0;
+            return dTime.getTime() + (item.DelayTime * 60 * 1000) >= now;
           });
+	  
 
           // 將資料分成順行逆行兩個部分
           let clockwise = json.filter(item=>item.Direction == 0);
