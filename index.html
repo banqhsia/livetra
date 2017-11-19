@@ -23,7 +23,7 @@
   <meta name="twitter:title" content="台鐵列車即時車況">
   <meta name="twitter:description" content="選擇上車的車站，查詢台鐵列車的即時車況">
   <meta name="twitter:image" content="http://app.boggy.tw/livetra/assets/images/sns_share_img.jpg">
-  
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="台鐵列車即時車況">
   <meta property="og:description" content="選擇上車的車站，查詢台鐵列車的即時車況">
@@ -48,7 +48,7 @@
   <div class="container">
     <div class="train_app" v-cloak>
       <select2 :options="this.$store.state.stationsOfLine" v-model="selectedStation" style="width: 100%"></select2>
-      
+
       <h3 class="direction-title">順行</h3>
       <div class="list-group">
         <div class="list-group-item" v-if="!this.$store.state.liveBoard.clockwise.length">
@@ -60,7 +60,7 @@
               <div class="col list-group-item-left-col">
                 <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
                 開往 {{ liveboard.EndingStationName.Zh_tw }}
-                <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
+                <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次
                 {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
               </div>
               <div class="col list-group-item-right-col">
@@ -87,7 +87,7 @@
               <div class="col list-group-item-left-col">
                 <span class="badge badge-default">{{ liveboard.ScheduledDepartureTime.replace(':00', '') }}</span>
                 開往 {{ liveboard.EndingStationName.Zh_tw }}
-                <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次 
+                <a href="#" v-on:click="showTrainInfo(liveboard.TrainNo)">{{ liveboard.TrainNo }}</a> 車次
                 {{ getTrainTypeByID(liveboard.TrainClassificationID) }}
               </div>
               <div class="col list-group-item-right-col">
@@ -104,7 +104,7 @@
       </div>
 
       <hr class="transparent">
-      
+
       <button type="button" class="btn btn-outline-primary view-timetable-btn" v-on:click="getDailyTimetable" v-if="!this.$store.state.timetable.length">查看時刻表</button>
 
       <div class="time-table-datagrid" v-else>
@@ -119,7 +119,7 @@
             </div>
           </div>
         </div>
-        
+
         <table class="table table-striped">
           <thead class="thead-inverse">
             <tr>
@@ -134,7 +134,7 @@
           <tbody>
             <tr v-for="train in this.$store.state.timetable" v-if="train.Direction == timetableDirection">
               <td>{{ train.TrainNo }}</td>
-              <td>{{ train.TrainClassificationName.Zh_tw.replace(/\(.+\)/g, '') }}</td>
+              <td>{{ train.TrainClassificationName | trainClass }} </td>
               <td>{{ train.ArrivalTime }}</td>
               <td>{{ train.DepartureTime }}</td>
               <td>{{ train.StartingStationName }}</td>
@@ -162,7 +162,7 @@
           </div>
         </div>
       </div>
-    
+
     </div>
   </div>
 
